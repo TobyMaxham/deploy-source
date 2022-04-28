@@ -10,27 +10,31 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
+    <meta name="description" content="PHP Source Deployer">
+    <meta name="keywords" content="Laravel, PHP, Deploy, Server, Git, Sources">
+    <meta name="author" content="Tobias Maxham">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="refresh" content="{{ config('deployment.refresh_page') }}">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//cdn.elnu.de/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
 
-    <title>{{ config('app.name') }}</title>
+    <title>{{ __('Update Sources', ['app_name' => config('app.name')]) }}</title>
 </head>
 <body>
 
 <div class="container">
     <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="{{ config('deployment.app_logo') }}" alt="" width="72" height="72">
-        <h2>Update {{ config('app.name') }} Sources</h2>
-        <p class="lead">The fastest way to update {{ config('app.name') }}.</p>
+        <h2>{{ __('Update Sources', ['app_name' => config('app.name')]) }}</h2>
+        <p class="lead">{{ __('The fastest way to update', ['app_name' => config('app.name')]) }}</p>
     </div>
 
     <div class="row">
 
         <div class="col-md-6 order-md-2 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
-                <span class="text-muted">Latest Commints</span>
+                <span class="text-muted">{{ __('Latest Commits') }}</span>
             </h4>
             <ul class="list-group mb-3">
                 @foreach($commits as $commit)
@@ -65,20 +69,20 @@
                 <ul class="pagination">
                     @if($currentPage == 1)
                         <li class="page-item disabled">
-                            <a class="page-link" href="?user={{ request()->get('user') }}&page=1">Previous</a>
+                            <a class="page-link" href="?page=1">Previous</a>
                         </li>
                     @else
                         <li class="page-item">
-                            <a class="page-link" href="?user={{ request()->get('user') }}&page={{ $currentPage-1 }}">Previous</a>
+                            <a class="page-link" href="?page={{ $currentPage-1 }}">Previous</a>
                         </li>
                     @endif
                     @for($i = 0;$i<4;$i++)
                         <li class="page-item {{ $currentPage == $currentPage+$i ? 'active' : '' }}">
-                            <a class="page-link" href="?user={{ request()->get('user') }}&page={{ $currentPage+$i }}">{{ $currentPage+$i }}</a>
+                            <a class="page-link" href="?page={{ $currentPage+$i }}">{{ $currentPage+$i }}</a>
                         </li>
                     @endfor
                     <li class="page-item">
-                        <a class="page-link" href="?user={{ request()->get('user') }}&page={{ $currentPage+1 }}">Next</a>
+                        <a class="page-link" href="?page={{ $currentPage+1 }}">Next</a>
                     </li>
                 </ul>
             </nav>
@@ -116,7 +120,7 @@
                     @endif
 
 
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Update Environment</button>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">{{ __('Update Environment') }}</button>
                 </form>
             @else
                 <div class="alert alert-danger">
@@ -145,7 +149,7 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="//code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="//cdn.elnu.de/libs/jquery/3.3.1/jquery.slim.min.js"></script>
 <script src="//cdn.elnu.de/libs/popper.js/1.16.0/umd/popper.min.js" crossorigin="anonymous"></script>
 <script src="//cdn.elnu.de/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
 

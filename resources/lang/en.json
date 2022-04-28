@@ -1,5 +1,9 @@
 {
     "Deploy Job executed": "Your deploy Job was executed.",
     "Deploy Job failed": "Your deploy Job could not be executed.",
-    "can not deploy today": "You can not deploy your source today. Allowed days are:"
+    "can not deploy today": "You can not deploy your source today. Allowed days are:",
+    "Update Environment": "Update Environment",
+    "The fastest way to update": "The fastest way to update :app_name.",
+    "Latest Commits": "Latest Commits",
+    "Update Sources": "Update :app_name Sources"
 }

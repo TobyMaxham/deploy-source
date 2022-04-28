@@ -20,4 +20,5 @@ return [
         'pagelen' => env('DEPLOY_BITBUCKET_PAGELEN'),
     ],
     'scripts' => env('DEPLOY_SCRIPTS'),
+    'refresh_page' => env('DEPLOY_REFRESH_PAGE', 600),
 ];
