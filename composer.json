@@ -1,8 +1,10 @@
 {
     "name": "tobymaxham/deploy-source",
     "type": "project",
-    "description": "A helper tool to quickly deploy your source code.",
-    "keywords": ["framework", "laravel"],
+    "description": "PHP Source Deployer",
+    "keywords": [
+        "laravel", "deploy", "deployment", "sourcecode"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
