@@ -21,4 +21,6 @@ return [
     ],
     'scripts' => env('DEPLOY_SCRIPTS'),
     'refresh_page' => env('DEPLOY_REFRESH_PAGE', 600),
+    'webhook_sources' => env('DEPLOY_WEBHOOK_SOURCES', 'null:Select Environment'),
+    'webhook_secret' => env('DEPLOY_WEBHOOK_SECRET'),
 ];

@@ -3,20 +3,26 @@
 namespace App\Support;
 
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 /**
- * @author Tobias Maxham <git2020@maxham.de>
+ * @author Tobias Maxham <git@maxham.de>
  */
 class Deployer
 {
     public static function getSources(): Collection
     {
         return self::getArrayFromConfig('deployment.sources');
+    }
+
+    public static function getWebhookSources(): Collection
+    {
+        return self::getArrayFromConfig('deployment.webhook_sources');
     }
 
     public static function getScripts(): Collection
@@ -42,12 +48,48 @@ class Deployer
     public static function deploy(string $env): bool
     {
         $script = self::getScripts()->keyBy($env)->first();
+        self::executeScript($script);
+
+        return true;
+    }
+
+    private static function executeScript($script)
+    {
         $output = exec($script);
 
         Log::channel(config('deployment.logging_channel'))
             ->info("Executed Script ... $script ... returned: $output");
 
-        return true;
+        return $output;
+    }
+
+    public static function deployFromBitbucket(Request $request)
+    {
+        if (! ($data = $request->get('push')) || !isset($data['changes'])) {
+            return response('');
+        }
+
+        $branches = collect($data['changes'])
+            ->map(self::mapBitbucketHook())
+            ->unique()
+            ->filter();
+
+        if (! $branches->count()) {
+            return response('');
+        }
+
+        $sources = self::getWebhookSources()->filter(fn($i, $src) => $src != 'null')->filter();
+        if (! $sources->count()) {
+            return response('');
+        }
+
+        $branches->each(function($branch) use($sources) {
+            if($script = $sources->get($branch)) {
+                self::executeScript($script);
+            }
+        });
+
+        return response('');
     }
 
     public static function currentPage(): int
@@ -94,5 +136,10 @@ class Deployer
     public static function allowedDays(): Collection
     {
         return collect(explode(',', config('deployment.deploy_limitation')));
+    }
+
+    private static function mapBitbucketHook()
+    {
+        return fn($item) => isset($item['new']['name']) && ! empty($item['new']['name']) ? $item['new']['name'] : null;
     }
 }
