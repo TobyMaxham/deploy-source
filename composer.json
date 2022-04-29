@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "tobymaxham/deploy-source",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "A helper tool to quickly deploy your source code.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
